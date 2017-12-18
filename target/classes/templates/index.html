@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<textarea id="msg"></textarea>
+<button id="btn">发送</button>
+<script>
+        var ws = new WebSocket("ws://localhost:8080/ws");
+
+        ws.onopen = function() {
+            console.log('已连接服务器');
+            ws.send('hello 我是客户端');
+        }
+
+        ws.onmessage = function(e) {
+            console.log(e.data);
+        }
+
+        ws.onclose = function() {
+            console.log('已断开跟服务器的连接');
+        }
+
+        ws.onerror = function(e) {
+            console.log('发生错误');
+        }
+
+        var btn = document.getElementById('btn');
+        var msg = document.getElementById('msg');
+
+        btn.onclick = function() {
+            ws.send(msg.value);
+        }
+    </script>
+</body>
+</html>
